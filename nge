@@ -4,9 +4,22 @@ set -o errexit    # Used to exit upon error, avoiding cascading errors
 
 IFS=$'\n\t'
 
+GREEN=$(tput setaf 2)
+RED=$(tput setaf 1)
+NC=$(tput sgr0)
+
+# echo $ENV_FILE
+if [ ! -f ".env" ]; then
+    printf "${RED}.env file does not exist !${RED}\n"
+    printf "${RED}using .env.example instead !${RED} \n"
+    echo -e "\n"
+    cp .env.example .env
+fi
+
 # read .env file
 # shellcheck disable=SC1090
-source <(grep -v '^#' .env | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
+source '.env'
+tput init
 
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
@@ -45,6 +58,8 @@ install() {
     artisan down
     printf "\n\n${YELLOW}[core]${NC} running database migration and seeders...\n"
     artisan migrate --seed
+    printf "\n\n${YELLOW}[core]${NC} running ide helper...\n"
+    artisan ide-helper:generate
     printf "\n\n${YELLOW}[core]${NC} upping application\n"
     artisan up
 
