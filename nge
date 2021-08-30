@@ -58,6 +58,8 @@ install() {
     artisan down
     printf "\n\n${YELLOW}[core]${NC} running database migration and seeders...\n"
     artisan migrate --seed
+    printf "\n\n${YELLOW}[core]${NC} running ide helper...\n"
+    artisan ide-helper:generate
     printf "\n\n${YELLOW}[core]${NC} upping application\n"
     artisan up
 
