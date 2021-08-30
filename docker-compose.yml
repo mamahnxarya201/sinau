@@ -33,9 +33,9 @@ services:
       - frontend
       - backend
   db:
-    image: mariadb/mariadb:10.6.4
+    image: mariadb:10.6.4
     volumes:
-      -- ${DOCKER_DATA_PATH_HOST}/mariadb:/var/lib/mysql
+      - ${DOCKER_DATA_PATH_HOST}/mariadb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -45,7 +45,7 @@ services:
     networks:
       - backend
   redis:
-    image: redis/redis:6.2.5-alpine3.14
+    image: redis:6.2.5-alpine3.14
     restart: unless-stopped
     volumes:
       - ${DOCKER_DATA_PATH_HOST}/redis:/data
