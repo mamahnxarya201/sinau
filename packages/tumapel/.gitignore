@@ -16,3 +16,5 @@ yarn-error.log
 .php-cs-fixer.cache
 datadir/postgres
 datadir/redis
+phpstorm.meta.php
+_ide_helper.php
